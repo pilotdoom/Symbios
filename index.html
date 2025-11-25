@@ -1,0 +1,2434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symbios - Marketplace Tanaman & Bibit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --secondary: #8bc34a;
+            --accent: #ff9800;
+            --light: #f8fdf8;
+            --gray: #757575;
+            --dark: #2e2e2e;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(46, 125, 50, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        .nav-icon:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-icon i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(rgba(46, 125, 50, 0.8), rgba(27, 94, 32, 0.8)), url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 350px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 20px;
+            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.3);
+        }
+
+        .hero-banner h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-banner p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .category {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .category:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.2);
+            border-color: var(--primary);
+        }
+
+        .category i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .category h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Products Grid */
+        .section-title {
+            font-size: 1.8rem;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary-dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #e8f5e9;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(46, 125, 50, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent, rgba(46, 125, 50, 0.1));
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-category {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: #e8f5e9;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+            margin-right: 0.8rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--dark));
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-section p {
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdbdbd;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Top Up Page */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .payment-method {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.15);
+            border-color: var(--primary);
+        }
+
+        .payment-method i {
+            font-size: 3rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+        }
+
+        .topup-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Profile Page */
+        .profile-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            margin-right: 2.5rem;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .profile-avatar:hover::after {
+            content: '📷';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            z-index: 1;
+        }
+
+        .profile-info h2 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .profile-info p {
+            color: var(--gray);
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Cart Page */
+        .cart-item {
+            display: flex;
+            background: white;
+            border-radius: 15px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.8rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin-right: 1.5rem;
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity {
+            margin: 0 15px;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-total {
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-top: 2px solid var(--primary);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            color: var(--primary);
+        }
+
+        /* Badge untuk stok */
+        .stock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .in-stock {
+            background: var(--primary);
+        }
+
+        .limited {
+            background: var(--accent);
+        }
+
+        /* Petals Logo */
+        .petals-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            border-radius: 50%;
+            margin-right: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .petals-logo::before {
+            content: '🌸';
+            font-size: 1.5rem;
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .amount-option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .amount-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .amount-option.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Product Detail Page */
+        .product-detail {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .product-detail-image {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 15px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-detail-info h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .product-detail-price {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-detail-category {
+            display: inline-block;
+            background: #e8f5e9;
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-detail-description {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: var(--gray);
+        }
+
+        .product-detail-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quantity-selector label {
+            font-weight: 600;
+        }
+
+        .quantity-input {
+            width: 80px;
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .back-button {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-results {
+            margin: 1rem 0;
+            color: var(--gray);
+        }
+
+        /* Seller Info */
+        .seller-info {
+            background: #f8fdf8;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 2px solid #e8f5e9;
+        }
+
+        .seller-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .seller-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+
+        .seller-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .seller-details h3 {
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+
+        .seller-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .seller-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Chat System */
+        .chat-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid #e8f5e9;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: 15px;
+            line-height: 1.4;
+        }
+
+        .message.sent {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.received {
+            background: #e8f5e9;
+            color: var(--dark);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-input {
+            padding: 1.5rem;
+            border-top: 2px solid #e8f5e9;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Add Product Page */
+        .add-product-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .image-preview {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border: 2px dashed var(--primary);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .image-preview:hover::after {
+            content: '📷';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            z-index: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .my-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .my-product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 2px solid #e8f5e9;
+        }
+
+        .my-product-header {
+            display: flex;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .my-product-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-right: 1rem;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .my-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .my-product-info {
+            flex: 1;
+        }
+
+        .my-product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        /* File Upload Styles */
+        .file-upload-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .file-upload-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .file-upload-info {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo" onclick="showPage('home')">
+                <i class="fas fa-seedling"></i>
+                <span>Symbios</span>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Cari tanaman, benih, atau bibit..." onkeyup="handleSearch(event)">
+                <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="nav-icons">
+                <div class="nav-icon" onclick="showPage('home')">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="nav-icon" onclick="showPage('categories')">
+                    <i class="fas fa-th-large"></i>
+                    <span>Kategori</span>
+                </div>
+                <div class="nav-icon" onclick="showPage('cart')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Keranjang</span>
+                </div>
+                <div class="nav-icon" onclick="showPage('add-product')">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Jual</span>
+                </div>
+                <div class="nav-icon" onclick="showPage('topup')">
+                    <i class="fas fa-wallet"></i>
+                    <span>Top Up</span>
+                </div>
+                <div class="nav-icon" onclick="showPage('profile')">
+                    <i class="fas fa-user"></i>
+                    <span>Akun</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="hero-banner">
+                <h1>Tumbuhkan Kebun Impian Anda</h1>
+                <p>Temukan berbagai tanaman, benih, dan bibit berkualitas untuk kebun dan rumah Anda</p>
+            </div>
+
+            <div class="categories">
+                <div class="category" onclick="filterProducts('Buah')">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>Tanaman Buah</h3>
+                    <p>Apel, Anggur, Pisang</p>
+                </div>
+                <div class="category" onclick="filterProducts('Sayur')">
+                    <i class="fas fa-carrot"></i>
+                    <h3>Tanaman Sayur</h3>
+                    <p>Bayam, Sawi, Brokoli</p>
+                </div>
+                <div class="category" onclick="filterProducts('Bunga')">
+                    <i class="fas fa-spa"></i>
+                    <h3>Tanaman Bunga</h3>
+                    <p>Mawar, Melati, Lily</p>
+                </div>
+                <div class="category" onclick="filterProducts('Bibit')">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Bibit Tanaman</h3>
+                    <p>Terong, Timun, Lily</p>
+                </div>
+                <div class="category" onclick="filterProducts('Benih')">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Benih Tanaman</h3>
+                    <p>Cabai, Tomat, Paprika</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Tanaman Terpopuler</h2>
+            <div class="products-grid" id="home-products">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+
+            <h2 class="section-title">Rekomendasi Untuk Anda</h2>
+            <div class="products-grid" id="recommended-products">
+                <!-- Recommended products will be loaded by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Categories Page -->
+        <div id="categories" class="page">
+            <h2 class="section-title">Semua Kategori Tanaman</h2>
+            <div class="categories">
+                <div class="category" onclick="filterProducts('Buah')">
+                    <i class="fas fa-apple-alt"></i>
+                    <h3>Tanaman Buah</h3>
+                    <p>Apel, Anggur, Pisang</p>
+                </div>
+                <div class="category" onclick="filterProducts('Sayur')">
+                    <i class="fas fa-carrot"></i>
+                    <h3>Tanaman Sayur</h3>
+                    <p>Bayam, Sawi, Brokoli</p>
+                </div>
+                <div class="category" onclick="filterProducts('Bunga')">
+                    <i class="fas fa-spa"></i>
+                    <h3>Tanaman Bunga</h3>
+                    <p>Mawar, Melati, Lily</p>
+                </div>
+                <div class="category" onclick="filterProducts('Bibit')">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Bibit Tanaman</h3>
+                    <p>Terong, Timun, Lily</p>
+                </div>
+                <div class="category" onclick="filterProducts('Benih')">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Benih Tanaman</h3>
+                    <p>Cabai, Tomat, Paprika</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Semua Produk Tanaman</h2>
+            <div class="products-grid" id="all-products">
+                <!-- All products will be loaded by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Search Results Page -->
+        <div id="search-results" class="page">
+            <button class="back-button" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <h2 class="section-title">Hasil Pencarian</h2>
+            <div class="search-results" id="search-info"></div>
+            <div class="products-grid" id="search-products">
+                <!-- Search results will be loaded by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Product Detail Page -->
+        <div id="product-detail" class="page">
+            <div class="product-detail">
+                <button class="back-button" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <div class="product-detail-container" id="product-detail-content">
+                    <!-- Product detail will be loaded by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Product Page -->
+        <div id="add-product" class="page">
+            <h2 class="section-title">Jual Produk</h2>
+            <div class="add-product-form">
+                <div class="form-group">
+                    <label for="product-name">Nama Produk</label>
+                    <input type="text" id="product-name" placeholder="Contoh: Bibit Pohon Apel">
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-price">Harga (Rp)</label>
+                    <input type="number" id="product-price" placeholder="Contoh: 45000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-category">Kategori</label>
+                    <select id="product-category">
+                        <option value="Buah">Tanaman Buah</option>
+                        <option value="Sayur">Tanaman Sayur</option>
+                        <option value="Bunga">Tanaman Bunga</option>
+                        <option value="Bibit">Bibit Tanaman</option>
+                        <option value="Benih">Benih Tanaman</option>
+                    </select>
+                </div>
+                
+                <div class="file-upload-container">
+                    <label class="file-upload-label">Gambar Produk</label>
+                    <div class="image-preview" id="product-image-preview">
+                        <span>🌱</span>
+                        <input type="file" id="product-image-input" accept="image/*">
+                    </div>
+                    <div class="file-upload-info">Klik untuk upload gambar (JPG, PNG, GIF) - Maksimal 5MB</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-description">Deskripsi Produk</label>
+                    <textarea id="product-description" rows="4" placeholder="Deskripsikan produk Anda..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn btn-primary btn-large" onclick="addNewProduct()">
+                        <i class="fas fa-plus"></i> Tambah Produk
+                    </button>
+                    <button class="btn btn-secondary btn-large" onclick="showPage('my-products')">
+                        <i class="fas fa-list"></i> Lihat Produk Saya
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Products Page -->
+        <div id="my-products" class="page">
+            <button class="back-button" onclick="showPage('add-product')">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </button>
+            <h2 class="section-title">Produk Saya</h2>
+            <div class="my-products-grid" id="my-products-list">
+                <!-- My products will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cart" class="page">
+            <h2 class="section-title">Keranjang Belanja</h2>
+            <div id="cart-items">
+                <!-- Cart items will be loaded by JavaScript -->
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">Rp 0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Ongkos Kirim</span>
+                    <span id="shipping">Rp 15.000</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <span id="total">Rp 15.000</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 1rem;" onclick="checkout()">Checkout Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Top Up Page -->
+        <div id="topup" class="page">
+            <h2 class="section-title">Top Up Petals</h2>
+            
+            <div class="payment-methods">
+                <div class="payment-method" onclick="selectPayment('dana')">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>DANA</h3>
+                    <p>Instant</p>
+                </div>
+                <div class="payment-method" onclick="selectPayment('ovo')">
+                    <i class="fas fa-wallet"></i>
+                    <h3>OVO</h3>
+                    <p>Instant</p>
+                </div>
+                <div class="payment-method" onclick="selectPayment('gopay')">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>GoPay</h3>
+                    <p>Instant</p>
+                </div>
+                <div class="payment-method" onclick="selectPayment('bank')">
+                    <i class="fas fa-university"></i>
+                    <h3>Transfer Bank</h3>
+                    <p>1-2 jam</p>
+                </div>
+            </div>
+
+            <div class="topup-form">
+                <div class="form-group">
+                    <label for="amount">Jumlah Top Up (Rp)</label>
+                    <input type="number" id="amount" placeholder="Min. 10.000 - Maks. 1.000.000" min="10000" max="1000000">
+                </div>
+
+                <div class="amount-options">
+                    <div class="amount-option" onclick="setAmount(10000)">Rp 10.000</div>
+                    <div class="amount-option" onclick="setAmount(25000)">Rp 25.000</div>
+                    <div class="amount-option" onclick="setAmount(50000)">Rp 50.000</div>
+                    <div class="amount-option" onclick="setAmount(100000)">Rp 100.000</div>
+                    <div class="amount-option" onclick="setAmount(250000)">Rp 250.000</div>
+                    <div class="amount-option" onclick="setAmount(500000)">Rp 500.000</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Nomor Telepon</label>
+                    <input type="text" id="phone" placeholder="Masukkan nomor telepon">
+                </div>
+                <button class="btn btn-primary" style="width: 100%; padding: 1rem;" onclick="processTopup()">Top Up Petals</button>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profile-avatar-container">
+                    <i class="fas fa-user" id="profile-avatar-icon"></i>
+                    <input type="file" id="profile-avatar-input" accept="image/*">
+                </div>
+                <div class="profile-info">
+                    <h2 id="profile-name">Green Thumb Gardener</h2>
+                    <p id="profile-email">gardener@example.com</p>
+                    <p>Member sejak: Maret 2023</p>
+                </div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <i class="fas fa-shopping-bag"></i>
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Pesanan</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Wishlist</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <div class="stat-value">10.0</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="petals-logo"></div>
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Petals</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Pengaturan Akun</h2>
+            <div class="add-product-form">
+                <div class="form-group">
+                    <label for="fullname">Nama Lengkap</label>
+                    <input type="text" id="fullname" value="Green Thumb Gardener" onchange="updateProfileName()">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" value="gardener@example.com" onchange="updateProfileEmail()">
+                </div>
+                <div class="form-group">
+                    <label for="profile-phone">Nomor Telepon</label>
+                    <input type="text" id="profile-phone" value="08123456789">
+                </div>
+                <div class="form-group">
+                    <label for="address">Alamat</label>
+                    <input type="text" id="address" value="Jl. Kebun Raya No. 45, Jakarta">
+                </div>
+                <button class="btn btn-primary btn-large" style="width: 100%;" onclick="updateProfile()">
+                    <i class="fas fa-save"></i> Simpan Perubahan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data produk tanaman
+        let products = JSON.parse(localStorage.getItem('symbios_products')) || [
+            { 
+                id: 1, 
+                name: "Bibit Pohon Apel", 
+                price: 45000, 
+                category: "Buah", 
+                image: "🍎", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Bibit pohon apel premium yang sudah siap tanam. Cocok untuk kebun rumah dengan hasil buah yang manis dan segar. Perawatan mudah dan adaptif dengan berbagai kondisi tanah.",
+                seller: "Toko Tanaman Hijau",
+                sellerEmail: "hijau@example.com"
+            },
+            { 
+                id: 2, 
+                name: "Bibit Anggur Merah", 
+                price: 35000, 
+                category: "Buah", 
+                image: "🍇", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Bibit anggur merah unggulan dengan kualitas terbaik. Dapat berbuah dalam waktu 1-2 tahun. Cocok untuk ditanam di pot besar atau langsung di tanah.",
+                seller: "Kebun Anggur Premium",
+                sellerEmail: "anggur@example.com"
+            },
+            { 
+                id: 3, 
+                name: "Bibit Pisang Cavendish", 
+                price: 25000, 
+                category: "Buah", 
+                image: "🍌", 
+                imageType: "emoji",
+                stock: "limited",
+                description: "Bibit pisang cavendish yang cepat berbuah. Tanaman tropis yang mudah dirawat dan cocok untuk pemula. Hasil buah lebat dan manis."
+            },
+            { 
+                id: 4, 
+                name: "Benih Bayam Hijau", 
+                price: 12000, 
+                category: "Sayur", 
+                image: "🌿", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Benih bayam hijau organik dengan tingkat perkecambahan tinggi. Cocok untuk hidroponik atau tanah biasa. Panen dalam 25-30 hari."
+            },
+            { 
+                id: 5, 
+                name: "Benih Sawi Putih", 
+                price: 10000, 
+                category: "Sayur", 
+                image: "🥬", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Benih sawi putih segar untuk kebun sayur Anda. Tumbuh optimal di dataran tinggi dengan hasil panen yang memuaskan."
+            },
+            { 
+                id: 6, 
+                name: "Bibit Brokoli Hijau", 
+                price: 18000, 
+                category: "Sayur", 
+                image: "🥦", 
+                imageType: "emoji",
+                stock: "limited",
+                description: "Bibit brokoli hijau sehat dengan nutrisi tinggi. Cocok untuk kebun organik dan sayuran keluarga. Perawatan khusus untuk hasil optimal."
+            },
+            { 
+                id: 7, 
+                name: "Bibit Mawar Merah", 
+                price: 32000, 
+                category: "Bunga", 
+                image: "🌹", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Bibit mawar merah dengan bunga besar dan wangi. Cocok untuk taman rumah atau hadiah. Perawatan rutin untuk bunga yang terus bermekaran."
+            },
+            { 
+                id: 8, 
+                name: "Bibit Melati Putih", 
+                price: 28000, 
+                category: "Bunga", 
+                image: "🌸", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Bibit melati putih dengan aroma khas yang menenangkan. Tanaman merambat yang cocok untuk pagar atau pot gantung."
+            },
+            { 
+                id: 9, 
+                name: "Bibit Lily of the Valley", 
+                price: 42000, 
+                category: "Bunga", 
+                image: "💮", 
+                imageType: "emoji",
+                stock: "limited",
+                description: "Bibit lily langka dengan bunga berbentuk lonceng yang cantik. Cocok untuk kolektor tanaman hias. Perawatan khusus diperlukan."
+            },
+            { 
+                id: 10, 
+                name: "Bibit Terong Ungu", 
+                price: 15000, 
+                category: "Bibit", 
+                image: "🍆", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Bibit terong ungu segar dengan hasil panen melimpah. Cocok untuk kebun sayur keluarga. Tahan terhadap hama umum."
+            },
+            { 
+                id: 11, 
+                name: "Bibit Timun Suri", 
+                price: 13000, 
+                category: "Bibit", 
+                image: "🥒", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Bibit timun suri untuk buah segar kaya air. Cocok untuk bulan puasa atau konsumsi sehari-hari. Panen dalam 2-3 bulan."
+            },
+            { 
+                id: 12, 
+                name: "Bibit Bunga Lily", 
+                price: 38000, 
+                category: "Bibit", 
+                image: "🌺", 
+                imageType: "emoji",
+                stock: "limited",
+                description: "Bibit bunga lily dengan warna-warni cerah. Cocok untuk mempercantik taman rumah. Bunga tahan lama dan mudah dirawat."
+            },
+            { 
+                id: 13, 
+                name: "Benih Cabai Rawit", 
+                price: 8000, 
+                category: "Benih", 
+                image: "🌶️", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Benih cabai rawit pedas dengan tingkat kepedasan tinggi. Cocok untuk sambal atau masakan pedas. Tahan penyakit dan hama."
+            },
+            { 
+                id: 14, 
+                name: "Benih Tomat Ceri", 
+                price: 9000, 
+                category: "Benih", 
+                image: "🍅", 
+                imageType: "emoji",
+                stock: "in-stock",
+                description: "Benih tomat ceri manis dengan buah kecil-kecil. Cocok untuk salad atau camilan sehat. Panen terus menerus."
+            },
+            { 
+                id: 15, 
+                name: "Benih Paprika Kuning", 
+                price: 11000, 
+                category: "Benih", 
+                image: "🫑", 
+                imageType: "emoji",
+                stock: "limited",
+                description: "Benih paprika kuning manis dengan warna cerah. Cocok untuk hidangan tumis atau salad. Kaya vitamin C dan antioksidan."
+            }
+        ];
+
+        let myProducts = JSON.parse(localStorage.getItem('symbios_my_products')) || [];
+        let cart = JSON.parse(localStorage.getItem('symbios_cart')) || [];
+        let profilePicture = localStorage.getItem('symbios_profile_picture');
+        let lastPage = 'home';
+        let selectedPayment = '';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProfilePicture();
+            loadHomeProducts();
+            loadRecommendedProducts();
+            setupEventListeners();
+        });
+
+        // Setup event listeners untuk file upload
+        function setupEventListeners() {
+            // Profile picture upload
+            const profileInput = document.getElementById('profile-avatar-input');
+            profileInput.addEventListener('change', function(event) {
+                updateProfilePicture(event);
+            });
+
+            // Product image upload
+            const productInput = document.getElementById('product-image-input');
+            productInput.addEventListener('change', function(event) {
+                previewProductImage(event);
+            });
+        }
+
+        // Initialize profile picture
+        function initializeProfilePicture() {
+            const avatarContainer = document.getElementById('profile-avatar-container');
+            
+            if (profilePicture) {
+                avatarContainer.innerHTML = `
+                    <img src="${profilePicture}" alt="Profile Picture">
+                    <input type="file" id="profile-avatar-input" accept="image/*">
+                `;
+                const newInput = document.getElementById('profile-avatar-input');
+                newInput.addEventListener('change', function(event) {
+                    updateProfilePicture(event);
+                });
+            }
+        }
+
+        // Update profile picture
+        function updateProfilePicture(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar! Maksimal 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profilePicture = e.target.result;
+                localStorage.setItem('symbios_profile_picture', profilePicture);
+                
+                const avatarContainer = document.getElementById('profile-avatar-container');
+                avatarContainer.innerHTML = `
+                    <img src="${profilePicture}" alt="Profile Picture">
+                    <input type="file" id="profile-avatar-input" accept="image/*">
+                `;
+                
+                const newInput = document.getElementById('profile-avatar-input');
+                newInput.addEventListener('change', function(event) {
+                    updateProfilePicture(event);
+                });
+                
+                alert('Foto profil berhasil diupdate! 📸');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Preview product image
+        function previewProductImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar! Maksimal 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('product-image-preview');
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="Product Preview">
+                    <input type="file" id="product-image-input" accept="image/*">
+                `;
+                
+                const newInput = document.getElementById('product-image-input');
+                newInput.addEventListener('change', function(event) {
+                    previewProductImage(event);
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Tampilkan halaman
+        function showPage(pageId) {
+            lastPage = document.querySelector('.page.active').id;
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId === 'home') {
+                loadHomeProducts();
+                loadRecommendedProducts();
+            } else if (pageId === 'categories') {
+                loadAllProducts();
+            } else if (pageId === 'cart') {
+                loadCart();
+            } else if (pageId === 'my-products') {
+                loadMyProducts();
+            }
+        }
+
+        // Kembali ke halaman sebelumnya
+        function goBack() {
+            showPage(lastPage);
+        }
+
+        // Load produk di homepage
+        function loadHomeProducts() {
+            const productsGrid = document.getElementById('home-products');
+            const allProducts = [...products, ...myProducts];
+            
+            productsGrid.innerHTML = allProducts.slice(0, 8).map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <div class="product-image">
+                        ${product.imageType === 'file' ? `<img src="${product.image}" alt="${product.name}">` : product.image}
+                        <div class="stock-badge ${product.stock || 'in-stock'}">
+                            ${(product.stock || 'in-stock') === 'in-stock' ? 'Tersedia' : 'Terbatas'}
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">Beli</button>
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); addToWishlist(${product.id})"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load produk rekomendasi
+        function loadRecommendedProducts() {
+            const recommendedGrid = document.getElementById('recommended-products');
+            const allProducts = [...products, ...myProducts];
+            
+            recommendedGrid.innerHTML = allProducts.slice(4, 12).map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <div class="product-image">
+                        ${product.imageType === 'file' ? `<img src="${product.image}" alt="${product.name}">` : product.image}
+                        <div class="stock-badge ${product.stock || 'in-stock'}">
+                            ${(product.stock || 'in-stock') === 'in-stock' ? 'Tersedia' : 'Terbatas'}
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">Beli</button>
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); addToWishlist(${product.id})"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load semua produk
+        function loadAllProducts() {
+            const allProductsGrid = document.getElementById('all-products');
+            const allProducts = [...products, ...myProducts];
+            
+            allProductsGrid.innerHTML = allProducts.map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <div class="product-image">
+                        ${product.imageType === 'file' ? `<img src="${product.image}" alt="${product.name}">` : product.image}
+                        <div class="stock-badge ${product.stock || 'in-stock'}">
+                            ${(product.stock || 'in-stock') === 'in-stock' ? 'Tersedia' : 'Terbatas'}
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">Beli</button>
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); addToWishlist(${product.id})"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load produk saya
+        function loadMyProducts() {
+            const myProductsGrid = document.getElementById('my-products-list');
+            
+            if (myProducts.length === 0) {
+                myProductsGrid.innerHTML = '<p style="text-align: center; padding: 3rem; color: var(--gray);">Belum ada produk yang ditambahkan</p>';
+                return;
+            }
+
+            myProductsGrid.innerHTML = myProducts.map(product => `
+                <div class="my-product-card">
+                    <div class="my-product-header">
+                        <div class="my-product-image">
+                            ${product.imageType === 'file' ? `<img src="${product.image}" alt="${product.name}">` : product.image}
+                        </div>
+                        <div class="my-product-info">
+                            <h3>${product.name}</h3>
+                            <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                            <div class="product-category">${product.category}</div>
+                        </div>
+                        <div class="my-product-actions">
+                            <button class="btn btn-primary btn-small" onclick="editProduct(${product.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p>${product.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // Filter produk berdasarkan kategori
+        function filterProducts(category) {
+            showPage('categories');
+            const allProducts = [...products, ...myProducts];
+            const filteredProducts = allProducts.filter(product => product.category === category);
+            const allProductsGrid = document.getElementById('all-products');
+            
+            allProductsGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <div class="product-image">
+                        ${product.imageType === 'file' ? `<img src="${product.image}" alt="${product.name}">` : product.image}
+                        <div class="stock-badge ${product.stock || 'in-stock'}">
+                            ${(product.stock || 'in-stock') === 'in-stock' ? 'Tersedia' : 'Terbatas'}
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">Beli</button>
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); addToWishlist(${product.id})"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search functionality
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (searchTerm === '') return;
+
+            const allProducts = [...products, ...myProducts];
+            const searchResults = allProducts.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) || 
+                product.category.toLowerCase().includes(searchTerm) ||
+                (product.description && product.description.toLowerCase().includes(searchTerm))
+            );
+
+            showPage('search-results');
+            const searchProductsGrid = document.getElementById('search-products');
+            const searchInfo = document.getElementById('search-info');
+
+            if (searchResults.length === 0) {
+                searchInfo.innerHTML = `Tidak ditemukan hasil untuk "${searchTerm}"`;
+                searchProductsGrid.innerHTML = '';
+            } else {
+                searchInfo.innerHTML = `Ditemukan ${searchResults.length} hasil untuk "${searchTerm}"`;
+                searchProductsGrid.innerHTML = searchResults.map(product => `
+                    <div class="product-card" onclick="showProductDetail(${product.id})">
+                        <div class="product-image">
+                            ${product.imageType === 'file' ? `<img src="${product.image}" alt="${product.name}">` : product.image}
+                            <div class="stock-badge ${product.stock || 'in-stock'}">
+                                ${(product.stock || 'in-stock') === 'in-stock' ? 'Tersedia' : 'Terbatas'}
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">${product.name}</div>
+                            <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                            <div class="product-category">${product.category}</div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">Beli</button>
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); addToWishlist(${product.id})"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Show product detail page
+        function showProductDetail(productId) {
+            const allProducts = [...products, ...myProducts];
+            const product = allProducts.find(p => p.id === productId);
+            const detailContent = document.getElementById('product-detail-content');
+            
+            detailContent.innerHTML = `
+                <div class="product-detail-image">
+                    ${product.imageType === 'file' ? `<img src="${product.image}" alt="${product.name}">` : product.image}
+                    <div class="stock-badge ${product.stock || 'in-stock'}">
+                        ${(product.stock || 'in-stock') === 'in-stock' ? 'Tersedia' : 'Terbatas'}
+                    </div>
+                </div>
+                <div class="product-detail-info">
+                    <h1>${product.name}</h1>
+                    <div class="product-detail-price">Rp ${product.price.toLocaleString('id-ID')}</div>
+                    <div class="product-detail-category">${product.category}</div>
+                    <div class="product-detail-description">
+                        ${product.description || 'Tidak ada deskripsi'}
+                    </div>
+                    <div class="quantity-selector">
+                        <label for="detail-quantity">Jumlah:</label>
+                        <input type="number" id="detail-quantity" class="quantity-input" value="1" min="1" max="10">
+                    </div>
+                    <div class="product-detail-actions">
+                        <button class="btn btn-primary btn-large" onclick="addToCartFromDetail(${product.id})">
+                            <i class="fas fa-shopping-cart"></i> Tambah ke Keranjang
+                        </button>
+                        <button class="btn btn-secondary btn-large" onclick="addToWishlist(${product.id})">
+                            <i class="far fa-heart"></i> Wishlist
+                        </button>
+                    </div>
+                    
+                    ${product.seller ? `
+                    <div class="seller-info">
+                        <div class="seller-header">
+                            <div class="seller-avatar">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="seller-details">
+                                <h3>${product.seller}</h3>
+                                <p>Penjual Terpercaya • Rating 4.9/5.0</p>
+                            </div>
+                        </div>
+                        <div class="seller-actions">
+                            <button class="btn btn-primary" onclick="startChat('${product.seller}')">
+                                <i class="fas fa-comment"></i> Chat Penjual
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-star"></i> Follow
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-container" id="chat-section" style="display: none; margin-top: 2rem;">
+                        <div class="chat-header">
+                            <div class="seller-avatar">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div>
+                                <h3>${product.seller}</h3>
+                                <p>Online</p>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Messages will be loaded here -->
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="chat-input" placeholder="Ketik pesan..." onkeyup="handleChatInput(event)">
+                            <button onclick="sendMessage('${product.seller}')">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            showPage('product-detail');
+            loadChatMessages();
+        }
+
+        // Chat functionality
+        function startChat(sellerName) {
+            document.getElementById('chat-section').style.display = 'flex';
+            loadChatMessages();
+        }
+
+        function handleChatInput(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function loadChatMessages() {
+            const chatMessages = document.getElementById('chat-messages');
+            if (!chatMessages) return;
+            
+            chatMessages.innerHTML = `
+                <div class="message received">
+                    <strong>Penjual:</strong> Halo! Ada yang bisa saya bantu?
+                </div>
+                <div class="message received">
+                    <strong>Penjual:</strong> Silakan tanyakan tentang produk ini
+                </div>
+            `;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage(sellerName) {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (message === '') return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML += `
+                <div class="message sent">
+                    <strong>Anda:</strong> ${message}
+                </div>
+            `;
+
+            // Auto reply after 2 seconds
+            setTimeout(() => {
+                chatMessages.innerHTML += `
+                    <div class="message received">
+                        <strong>${sellerName}:</strong> Terima kasih atas pertanyaannya. Saya akan balas segera.
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 2000);
+
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Add new product
+        function addNewProduct() {
+            const name = document.getElementById('product-name').value;
+            const price = parseInt(document.getElementById('product-price').value);
+            const category = document.getElementById('product-category').value;
+            const description = document.getElementById('product-description').value;
+            
+            const imageInput = document.getElementById('product-image-input');
+            let image = '🌱';
+            let imageType = 'emoji';
+
+            if (!name || !price || !description) {
+                alert('Harap isi semua field yang diperlukan!');
+                return;
+            }
+
+            if (imageInput.files && imageInput.files[0]) {
+                const file = imageInput.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    image = e.target.result;
+                    imageType = 'file';
+                    saveProduct(name, price, category, description, image, imageType);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveProduct(name, price, category, description, image, imageType);
+            }
+        }
+
+        function saveProduct(name, price, category, description, image, imageType) {
+            const newProduct = {
+                id: Date.now(),
+                name,
+                price,
+                category,
+                image,
+                imageType,
+                description,
+                stock: 'in-stock',
+                seller: document.getElementById('profile-name').textContent,
+                sellerEmail: document.getElementById('email').value
+            };
+
+            myProducts.push(newProduct);
+            localStorage.setItem('symbios_my_products', JSON.stringify(myProducts));
+
+            // Clear form
+            document.getElementById('product-name').value = '';
+            document.getElementById('product-price').value = '';
+            document.getElementById('product-description').value = '';
+            document.getElementById('product-image-preview').innerHTML = `
+                <span>🌱</span>
+                <input type="file" id="product-image-input" accept="image/*">
+            `;
+            
+            const newInput = document.getElementById('product-image-input');
+            newInput.addEventListener('change', function(event) {
+                previewProductImage(event);
+            });
+
+            alert('Produk berhasil ditambahkan! 🌱');
+            showPage('my-products');
+        }
+
+        // Edit product
+        function editProduct(productId) {
+            const product = myProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-price').value = product.price;
+            document.getElementById('product-category').value = product.category;
+            document.getElementById('product-description').value = product.description;
+            
+            const preview = document.getElementById('product-image-preview');
+            if (product.imageType === 'file') {
+                preview.innerHTML = `
+                    <img src="${product.image}" alt="Product Preview">
+                    <input type="file" id="product-image-input" accept="image/*">
+                `;
+            } else {
+                preview.innerHTML = `
+                    <span>${product.image}</span>
+                    <input type="file" id="product-image-input" accept="image/*">
+                `;
+            }
+            
+            const newInput = document.getElementById('product-image-input');
+            newInput.addEventListener('change', function(event) {
+                previewProductImage(event);
+            });
+
+            myProducts = myProducts.filter(p => p.id !== productId);
+            localStorage.setItem('symbios_my_products', JSON.stringify(myProducts));
+
+            showPage('add-product');
+            alert('Produk siap untuk diedit! ✏️');
+        }
+
+        // Delete product
+        function deleteProduct(productId) {
+            if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+                myProducts = myProducts.filter(p => p.id !== productId);
+                localStorage.setItem('symbios_my_products', JSON.stringify(myProducts));
+                loadMyProducts();
+                alert('Produk berhasil dihapus! 🗑️');
+            }
+        }
+
+        // Cart functionality
+        function addToCart(productId) {
+            const allProducts = [...products, ...myProducts];
+            const product = allProducts.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    imageType: product.imageType,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('symbios_cart', JSON.stringify(cart));
+            alert(`🌱 ${product.name} berhasil ditambahkan ke keranjang!`);
+        }
+
+        function addToCartFromDetail(productId) {
+            const quantity = parseInt(document.getElementById('detail-quantity').value) || 1;
+            const allProducts = [...products, ...myProducts];
+            const product = allProducts.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    imageType: product.imageType,
+                    quantity: quantity
+                });
+            }
+            
+            localStorage.setItem('symbios_cart', JSON.stringify(cart));
+            alert(`🌱 ${product.name} (${quantity}x) berhasil ditambahkan ke keranjang!`);
+        }
+
+        function loadCart() {
+            const cartItems = document.getElementById('cart-items');
+            const subtotalEl = document.getElementById('subtotal');
+            const totalEl = document.getElementById('total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; padding: 3rem; color: var(--gray);">Keranjang belanja Anda masih kosong</p>';
+                subtotalEl.textContent = 'Rp 0';
+                totalEl.textContent = 'Rp 15.000';
+                return;
+            }
+            
+            let subtotal = 0;
+            cartItems.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            ${item.imageType === 'file' ? `<img src="${item.image}" alt="${item.name}">` : item.image}
+                        </div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')}</div>
+                        </div>
+                        <div class="cart-item-actions">
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span class="quantity">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${item.id})">Hapus</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            const total = subtotal + 15000;
+            subtotalEl.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            totalEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    localStorage.setItem('symbios_cart', JSON.stringify(cart));
+                    loadCart();
+                }
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('symbios_cart', JSON.stringify(cart));
+            loadCart();
+            alert('Produk dihapus dari keranjang');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Keranjang belanja kosong!');
+                return;
+            }
+            
+            alert('🌿 Checkout berhasil! Terima kasih telah berbelanja di Symbios. Tanaman akan segera dikirim ke alamat Anda.');
+            cart = [];
+            localStorage.setItem('symbios_cart', JSON.stringify(cart));
+            loadCart();
+            showPage('home');
+        }
+
+        // Top Up functionality
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.style.border = '2px solid transparent';
+            });
+            event.currentTarget.style.border = '2px solid var(--primary)';
+        }
+
+        function setAmount(amount) {
+            document.getElementById('amount').value = amount;
+            document.querySelectorAll('.amount-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
+        
+        function processTopup() {
+            const amount = document.getElementById('amount').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!amount || !phone) {
+                alert('Harap isi semua field!');
+                return;
+            }
+            
+            if (amount < 10000 || amount > 1000000) {
+                alert('Jumlah top up harus antara Rp 10.000 - Rp 1.000.000');
+                return;
+            }
+            
+            if (!selectedPayment) {
+                alert('Pilih metode pembayaran terlebih dahulu!');
+                return;
+            }
+            
+            alert(`🌸 Top up Petals sebesar Rp ${parseInt(amount).toLocaleString('id-ID')} berhasil! Melalui ${selectedPayment.toUpperCase()}`);
+            document.getElementById('amount').value = '';
+            document.getElementById('phone').value = '';
+            selectedPayment = '';
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.style.border = '2px solid transparent';
+            });
+            document.querySelectorAll('.amount-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+
+        // Profile functionality
+        function updateProfileName() {
+            const newName = document.getElementById('fullname').value;
+            document.getElementById('profile-name').textContent = newName;
+        }
+
+        function updateProfileEmail() {
+            const newEmail = document.getElementById('email').value;
+            document.getElementById('profile-email').textContent = newEmail;
+        }
+
+        function updateProfile() {
+            alert('✅ Profile berhasil diperbarui!');
+        }
+
+        function addToWishlist(productId) {
+            const allProducts = [...products, ...myProducts];
+            const product = allProducts.find(p => p.id === productId);
+            alert(`❤️ ${product.name} ditambahkan ke wishlist!`);
+        }
+    </script>
+</body>
+</html>
